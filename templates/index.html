@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pneumonia Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background: url('/static/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            width: 60%;
+            margin: auto;
+        }
+        form, .buttons, .navigation {
+            margin: 20px auto;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .navbar button {
+            padding: 12px 18px;
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .navbar button:hover {
+            background-color: #c9302c; /* Darker red on hover */
+        }
+        .info-box {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background:rgb(255, 160, 59);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+    </style>
+    <script>
+        function storeResults() {
+            const folderName = prompt("Enter a name for the batch folder:");
+            if (!folderName) return;
+
+            fetch(`/store_tests?folder=${folderName}`, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Results stored successfully!");
+                    } else {
+                        alert(data.message);
+                    }
+                });
+
+        }
+
+        function quitApplication() {
+            if (!confirm("Are you sure you want to quit the application?")) return;
+            document.getElementById('black-screen').style.display = 'block';
+
+
+            fetch('/quit', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Application is closing...");
+                        setTimeout(() => { window.close(); }, 1000);
+                    } else {
+                        alert("Error: Unable to quit.");
+                    }
+                });
+        }
+    </script>
+</head>
+<body>
+    <div id="black-screen" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        display: none;
+        z-index: 9999;">
+    </div>
+
+    <div class="navbar">
+        <button onclick="window.location.href='/view_batches'">View Stored Batches</button>
+        <button onclick="quitApplication()">Quit Application</button>
+    </div>
+
+    <div class="info-box">
+        <strong>How to Use:</strong>
+        <ul>
+            <li>Upload an X-ray image and click 'Upload & Predict'.</li>
+            <li>View predictions.</li>
+            <li>Store results into named batches.</li>
+            <li>Access stored batches from 'View Stored Batches'.</li>
+        </ul>
+    </div>
+    
+    <div class="container">
+        <h1>Pneumonia Detection from X-ray</h1>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" multiple required>
+            <br><br>
+            <button type="submit">Upload & Predict</button>
+        </form>
+        {% if stored_files %}
+            <h2>Uploaded X-ray Images and Predictions:</h2>
+            <div class="image-container">
+                {% for filename in stored_files %}
+                    <div class="image-box">
+                        <p><strong>{{ filename }}</strong></p>
+                        <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="X-ray Image" style="max-width: 150px; height: auto; display: block; margin: auto;">
+                        <p><strong>Prediction:</strong> {{ predictions[loop.index0][1] if predictions else "No prediction available" }}</p>
+                
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
+        {% if error %}
+            <h2 style="color: red;">Error: {{ error }}</h2>
+        {% endif %}
+
+        {% if predictions %}
+            <h2>Predictions:</h2>
+            <ul>
+                {% for filename, result in predictions %}
+                    <li><strong>{{ filename }}</strong>: {{ result }}</li>
+                {% endfor %}
+            </ul>
+            <div class="buttons">
+                <button onclick="storeResults()">Store Results</button>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

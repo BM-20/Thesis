@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stored Test Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            margin: auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .image-box {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fff;
+        }
+        img {
+            max-width: 200px;
+            border-radius: 5px;
+            display: block;
+            margin: auto;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            color: blue;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            padding: 5px;
+            border-radius: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stored Test Results</h1>
+        {% for image in images %}
+            <div class="image-box">
+                <p><strong>Name:</strong> {{ image.filename }}</p>
+                <p><strong>Stored On:</strong> {{ image.timestamp }}</p>
+                <img src="{{ url_for('static', filename='batches/' + batch_name + '/' + image.filename) }}" alt="Original X-ray">
+                
+                {% if image.grad_cam %}
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <p><strong>Grad-CAM Visualization:</strong> 
+                            <span class="tooltip">❓
+                                <span class="tooltiptext">Grad-CAM highlights important regions of the image that contributed to the model's decision. Red shhowing where model focus more is.</span>
+                            </span>
+                        </p>
+                        <img src="{{ url_for('static', filename='batches/' + batch_name + '/' + image.grad_cam) }}" alt="Grad-CAM">
+                    </div>
+                {% endif %}
+
+                
+                <p><strong>Prediction:</strong> {{ image.prediction }}</p>
+            </div>
+        {% endfor %}
+        
+        <button onclick="window.location.href='/view_batches'">Back to Stored Batches</button>
+    </div>
+</body>
+</html>

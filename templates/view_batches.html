@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stored Batches</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            margin: auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .batch-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .batch-box {
+            margin: 10px;
+            padding: 10px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .back-button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function deleteBatch(batchName) {
+            if (!confirm(`Are you sure you want to delete the batch '${batchName}'?`)) return;
+
+            fetch(`/delete_batch/${batchName}`, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Batch deleted successfully!');
+                        location.reload();
+                    }
+                });
+        }
+
+        function goBack() {
+            window.location.href = '/';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Stored Batches</h1>
+        {% if batches %}
+            <div class="batch-container">
+                {% for batch in batches %}
+                    <div class="batch-box">
+                        <p><strong>{{ batch }}</strong></p>
+                        <button onclick="window.location.href='/view_tests/{{ batch }}'">View Batch</button>
+                        <button onclick="deleteBatch('{{ batch }}')">Delete Batch</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h2>No stored batches available.</h2>
+        {% endif %}
+        <button class="back-button" onclick="goBack()">Back to Main Page</button>
+    </div>
+</body>
+</html>
