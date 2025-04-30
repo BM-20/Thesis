@@ -20,7 +20,7 @@ This application leverages a fine-tuned **ResNet-18** convolutional neural netwo
 
 ## Dataset
 
-- Sourced from [UCSD and Guangzhou Women and Children’s Medical Center](https://data.mendeley.com/datasets/rscbjbr9sj/2)
+- Sourced from [https://data.mendeley.com/datasets/rscbjbr9sj/3)
 - Contains: 5,212 training, 20 validation, 624 test images
 - Preprocessed: Resized, grayscale to RGB, augmented during training
 
