@@ -78,7 +78,7 @@ Visit `http://localhost:5000` in your browser.
 
 - **Balanced Accuracy**: 0.87
 - **Normal Accuracy**: 175/234
-- **Pneumonia Accuracy**: 22/22
+- **Pneumonia Accuracy**: 368/22
 - Slight bias due to class imbalance
 - Model interpretable with Grad-CAM overlays
 
