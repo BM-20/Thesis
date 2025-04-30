@@ -165,7 +165,7 @@ def predict(image: Image.Image, filename: str):
     confidence = probabilities[prediction].item() * 100
 
     if confidence < 70:
-        return "Uncertain Image - Not a valid X-ray", "invalid", confidence, None
+        return "Uncertain Image", "invalid", confidence, None
 
     label = "PNEUMONIA" if prediction == 1 else "NORMAL"
 
