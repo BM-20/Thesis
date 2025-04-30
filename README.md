@@ -56,7 +56,7 @@ Visit `http://localhost:5000` in your browser.
 - View batches via `/view_batches`
 - Shut down the app from the UI or POST to `/quit`
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ├── New.ipynb                # used for model training (backend)
