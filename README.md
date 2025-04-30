@@ -33,15 +33,16 @@ This application leverages a fine-tuned **ResNet-18** convolutional neural netwo
 - Navigate and delete stored test results
 
 ## Usage
+### 1. Remember to change the home directory where the folder for test, training, and validation will be stored.
 
-### 1. Add Model File
+### 2. Add Model File
 
-Ensure the file `model.pth` is in the root directory. This contains the trained weights of the ResNet-18 model. This achieved by running the backend:
+Ensure the file `model.pth` is in the root directory. This contains the trained weights of the ResNet-18 model. This is achieved by running the backend:
 ```bash
 python New.ipynb.py
 ```
 This saves the optimal model after 10 epochs
-### 2. Run the App
+### 3. Run the App
 run the front end:
 ```bash
 python pneumonia_api.py
@@ -49,7 +50,7 @@ python pneumonia_api.py
 
 Visit `http://localhost:5000` in your browser.
 
-### 3. UI Controls
+### 4. UI Controls
 
 - Upload X-rays via the main page
 - Store results in batches
