@@ -1,4 +1,4 @@
-# Pneumonia Detection Web App
+# Pneumonia Classification with Deep Learning
 
 A deep learning-powered web application that classifies chest X-rays as **Pneumonia**, **Normal**, or **Uncertain**, and visualizes the model's attention using **Grad-CAM** heatmaps.
 
@@ -33,7 +33,7 @@ This application leverages a fine-tuned **ResNet-18** convolutional neural netwo
 - Navigate and delete stored test results
 
 ## Usage
-### 1. Remember to change the home directory where the folder for test, training, and validation will be stored.
+### 1. Remember to change the home directory where the test, training, and validation folder will be stored.
 
 ### 2. Add Model File
 
@@ -53,8 +53,8 @@ Visit `http://localhost:5000` in your browser.
 ### 4. UI Controls
 
 - Upload X-rays via the main page
-- Store results in batches
-- View batches via `/view_batches`
+- Store results in batches(folders)
+- View tested saved batches (in folders) via `/view_batches`
 - Shut down the app from the UI or POST to `/quit`
 
 ## Project Structure
@@ -79,7 +79,7 @@ Visit `http://localhost:5000` in your browser.
 - **Balanced Accuracy**: 0.87
 - **Normal Accuracy**: 175/234
 - **Pneumonia Accuracy**: 368/22
-- Slight bias due to class imbalance
+- Slight bias due to class imbalance towards the pneumonia class
 - Model interpretable with Grad-CAM overlays
 
 ## Future Work
