@@ -1,6 +1,6 @@
 # Pneumonia Classification with Deep Learning
 
-A deep learning-powered web application that classifies chest X-rays as **Pneumonia**, **Normal**, or **Uncertain**, and visualizes the model's attention using **Grad-CAM** heatmaps.
+A deep learning web application that classifies chest X-rays as **Pneumonia**, **Normal**, or **Uncertain**, and visualizes the model's attention using **Grad-CAM** heatmaps.
 
 ## Project Overview
 
