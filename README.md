@@ -2,8 +2,6 @@
 
 A deep-learning web app that classifies chest X-rays as **Normal** or **Pneumonia** — with an **Uncertain** fallback when the model's confidence is low — and explains every prediction with a **Grad-CAM** attention heatmap.
 
-> ⚠️ **Disclaimer:** This is a research/educational project. It is **not** a medical device and has not been validated for clinical use. Do not use it for diagnosis.
-
 <!-- Add a clean demo image at docs/demo.png and uncomment:
 ![App demo](docs/demo.png)
 -->
