@@ -1,0 +1,31 @@
+# ---- Datasets & large artifacts (distribute separately, not via git) ----
+chest_xray/
+chestxrays/
+*.zip
+*.mov
+
+# ---- Model weights (use a GitHub Release / Git LFS / external storage) ----
+*.pth
+
+# ---- App runtime data (regenerated at runtime) ----
+static/uploads/
+static/heatmaps/
+static/batches/
+static/results.json
+static/latest_test.json
+predictions.db
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+
+# ---- Notebook checkpoints ----
+.ipynb_checkpoints/
+
+# ---- OS / editor cruft ----
+.DS_Store

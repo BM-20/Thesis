@@ -1,0 +1,33 @@
+# Datasets & large artifacts
+chest_xray/
+*.zip
+*.mov
+
+# Notebooks & checkpoints
+*.ipynb
+.ipynb_checkpoints/
+
+# Python caches / virtualenvs
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Local runtime data (the app recreates these)
+static/uploads/
+static/heatmaps/
+static/batches/
+static/results.json
+static/latest_test.json
+
+# Tooling, docs, and assets not needed in the image
+.git/
+.gitignore
+.DS_Store
+*.png
+*.pdf
+*.docx
+tests/
+conftest.py
+training_log.txt
+requirements-dev.txt

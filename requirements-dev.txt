@@ -1,0 +1,14 @@
+# Development dependencies: the app deps plus everything needed to run the
+# training notebook and the test suite.
+-r requirements.txt
+
+# Training / evaluation (New.ipynb)
+scikit-learn
+pandas
+matplotlib
+seaborn
+torchsummary
+jupyter
+
+# Tests
+pytest

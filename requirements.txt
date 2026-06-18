@@ -1,0 +1,10 @@
+# Runtime dependencies for the web app (pneumonia_api.py).
+# Pin exact versions (e.g. `pip freeze`) before deploying.
+flask
+gunicorn
+torch
+torchvision
+pillow
+numpy
+opencv-python
+pydicom
