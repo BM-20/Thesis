@@ -1,4 +1,4 @@
-# Pneumonia Detection from Chest X-rays (ResNet-18 + Grad-CAM)
+# Pneumonia Classification with Deep Learning
 
 A deep learning web application that classifies chest X-rays as **Normal** or **Pneumonia**. With an **Uncertain** fallback when the model's confidence is low and visualizes the model's attention using **Grad-CAM** heatmaps.
 
