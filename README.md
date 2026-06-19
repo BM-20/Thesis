@@ -1,10 +1,6 @@
 # Pneumonia Detection from Chest X-rays (ResNet-18 + Grad-CAM)
 
-A deep-learning web app that classifies chest X-rays as **Normal** or **Pneumonia** — with an **Uncertain** fallback when the model's confidence is low — and explains every prediction with a **Grad-CAM** attention heatmap.
-
-<!-- Add a clean demo image at docs/demo.png and uncomment:
-![App demo](docs/demo.png)
--->
+A deep learning web application that classifies chest X-rays as **Normal** or **Pneumonia**. With an **Uncertain** fallback when the model's confidence is low and visualizes the model's attention using **Grad-CAM** heatmaps.
 
 ## Overview
 
@@ -28,9 +24,9 @@ A deep-learning web app that classifies chest X-rays as **Normal** or **Pneumoni
 - **Source:** Kermany et al. (2018), *Chest X-Ray Images (Pneumonia)* — Mendeley Data, v3: https://data.mendeley.com/datasets/rscbjbr9sj/3
 - **Splits (as used here):**
   - Train: 5,212 images (1,339 Normal / 3,873 Pneumonia)
-  - Validation: 20 images (10 / 10) — *small; see Known limitations*
+  - Validation: 20 images (10 / 10)
   - Test: 624 images (234 Normal / 390 Pneumonia)
-- **Preprocessing:** resize to 224×224, grayscale→RGB, ImageNet normalization; random horizontal flip + small rotation augmentation on the training split only.
+- **Preprocessing:** resize to 224×224, grayscale→RGB, ImageNet normalization; random horizontal flip and small rotation augmentation on the training split only.
 
 ## Setup
 
@@ -124,19 +120,8 @@ Evaluated on the held-out 624-image test set, using the best model by validation
 
 Each prediction includes a Grad-CAM heatmap computed from ResNet-18's last convolutional block, overlaid on the original X-ray to show which regions most influenced the decision.
 
-## Known limitations / roadmap
-
-- **Validation set is only ~20 images**, so validation metrics are unreliable — replace with a larger stratified split.
-- **Class imbalance (~1 : 2.9)** is not yet reflected in the loss (class weights are computed but unused).
-- **Train/serve consistency:** the training and serving model heads should be made identical.
-- No automated tests, Dockerfile, or CI yet.
-
 ## Future work
 
-- Try deeper backbones (e.g. DenseNet) and full fine-tuning.
+- Incorporate deeper architectures like **DenseNet**
 - Extend to multi-class (e.g. add COVID-19).
-- Deploy to a cloud host for public access.
-
-## License
-
-Add a license (e.g. MIT) if you intend to share this publicly.
+- Deploy to a cloud host for public access
