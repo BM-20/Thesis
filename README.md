@@ -4,7 +4,7 @@ A deep learning web application that classifies chest X-rays as **Normal** or **
 
 ## Overview
 
-- **Transfer learning** with a **frozen ResNet-18** (ImageNet) backbone plus a custom classifier head. Only the head is trained — the convolutional backbone is used as a fixed feature extractor (i.e. feature extraction, *not* full fine-tuning).
+- **Transfer learning** with a **frozen ResNet-18** (ImageNet) backbone plus a custom classifier head. Only the head is trained, the convolutional backbone is used as a fixed feature extractor (i.e. feature extraction, *not* full fine tuning).
 - **Flask** inference server (`pneumonia_api.py`) supporting single or batch image upload (PNG/JPG/JPEG/DICOM).
 - **Grad-CAM** heatmaps highlight the image regions driving each prediction.
 - **Batch management:** save, browse, and delete named sets of predictions.
@@ -15,13 +15,13 @@ A deep learning web application that classifies chest X-rays as **Normal** or **
 |---|---|
 | Backbone | ResNet-18, ImageNet weights, **frozen** |
 | Classifier head | `Linear(512→128) → BN → ReLU → Linear(128→32) → BN → ReLU → Linear(32→2)` |
-| Input | 224×224, grayscale converted to 3-channel, ImageNet-normalized |
+| Input | 224×224, grayscale converted to 3 channel, ImageNet normalised |
 | Loss / optimizer | CrossEntropyLoss, Adam (lr = 1e-3) |
 | Epochs | 10 |
 
 ## Dataset
 
-- **Source:** Kermany et al. (2018), *Chest X-Ray Images (Pneumonia)* — Mendeley Data, v3: https://data.mendeley.com/datasets/rscbjbr9sj/3
+- **Source:** Kermany et al. (2018), *Chest X-Ray Images (Pneumonia)* Mendeley Data, v3: https://data.mendeley.com/datasets/rscbjbr9sj/3
 - **Splits (as used here):**
   - Train: 5,212 images (1,339 Normal / 3,873 Pneumonia)
   - Validation: 20 images (10 / 10)
@@ -39,7 +39,7 @@ pip install -r requirements-dev.txt    # also train / run tests (includes the ab
 
 Place the dataset under `chest_xray/` as `train/`, `validation/`, `test/`, each containing `NORMAL/` and `PNEUMONIA/` subfolders.
 
-## Train (optional — produces `model.pth`)
+## Train  (produces `model.pth`)
 
 Training lives in `New.ipynb`. Open it (`jupyter lab New.ipynb`) and run all cells, or execute it headless:
 
@@ -85,7 +85,7 @@ Then open http://localhost:5000. The image bundles `model.pth`, so rebuild it af
 ```
 ├── New.ipynb              # Model training (data loading → train → evaluate → save model.pth)
 ├── pneumonia_api.py       # Flask server + inference + Grad-CAM
-├── model.pth              # Trained ResNet-18 weights (not committed — see notes)
+├── model.pth              # Trained ResNet-18 weights (not committed — see note)
 ├── requirements.txt       # App runtime dependencies
 ├── requirements-dev.txt   # + training & test dependencies
 ├── Dockerfile             # Containerized app (gunicorn)
@@ -101,7 +101,7 @@ Then open http://localhost:5000. The image bundles `model.pth`, so rebuild it af
 
 ## Results
 
-Evaluated on the held-out 624-image test set, using the best model by validation loss:
+Evaluated on the held out 624 image test set, using the best model by validation loss:
 
 | Class | Precision | Recall | F1 |
 |---|---|---|---|
@@ -110,13 +110,23 @@ Evaluated on the held-out 624-image test set, using the best model by validation
 
 - **Overall accuracy:** 0.88
 - **Balanced accuracy:** 0.85
-- Confusion matrix: 174/234 normal and 376/390 pneumonia correct. The model leans toward predicting pneumonia (60 false positives vs only 14 missed cases) — a sensible error profile for a screening tool.
 
 ![Confusion matrix](conf-mat.png)
+
+174/234 normal and 376/390 pneumonia correct. The model leans toward predicting pneumonia (60 false positives vs only 14 missed cases)
+
+
 ![Accuracy per epoch](accperepoch.png)
+
+Graph shows accuracy increasing per epoch
+
+
 ![Loss per epoch](lossperepoch.png)
 
-## Interpretability — Grad-CAM
+Graph shows loss decreasing per epoch
+
+
+## Interpretability Grad-CAM
 
 Each prediction includes a Grad-CAM heatmap computed from ResNet-18's last convolutional block, overlaid on the original X-ray to show which regions most influenced the decision.
 
