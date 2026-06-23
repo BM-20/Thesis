@@ -9,6 +9,12 @@ A deep learning web application that classifies chest X-rays as **Normal** or **
 - **Grad-CAM** heatmaps highlight the image regions driving each prediction.
 - **Batch management:** save, browse, and delete named sets of predictions.
 
+## Demo
+
+A prediction with its confidence score and a Grad-CAM heatmap highlighting the regions that drove the decision:
+
+![Pneumonia predictions with Grad-CAM overlays](demo.png)
+
 ## Model
 
 | | |
@@ -23,8 +29,7 @@ A deep learning web application that classifies chest X-rays as **Normal** or **
 
 - **Source:** Kermany et al. (2018), *Chest X-Ray Images (Pneumonia)* Mendeley Data, v3: https://data.mendeley.com/datasets/rscbjbr9sj/3
 - **Splits (as used here):**
-  - Train: 5,212 images (1,339 Normal / 3,873 Pneumonia)
-  - Validation: 20 images (10 / 10)
+  - Train / Validation: 5,212 images (1,339 Normal / 3,873 Pneumonia), split 85/15 (stratified, seeded) → ~4,430 train / ~782 validation
   - Test: 624 images (234 Normal / 390 Pneumonia)
 - **Preprocessing:** resize to 224×224, grayscale→RGB, ImageNet normalization; random horizontal flip and small rotation augmentation on the training split only.
 
@@ -37,7 +42,7 @@ pip install -r requirements.txt        # run the app only
 pip install -r requirements-dev.txt    # also train / run tests (includes the above)
 ```
 
-Place the dataset under `chest_xray/` as `train/`, `validation/`, `test/`, each containing `NORMAL/` and `PNEUMONIA/` subfolders.
+Place the dataset under `chest_xray/` with `train/` and `test/` folders, each containing `NORMAL/` and `PNEUMONIA/` subfolders. The validation set is split from `train/` automatically.
 
 ## Train  (produces `model.pth`)
 
